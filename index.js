@@ -1,15 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const models = require('./models');
+
 mongoose.set('strictQuery', true);
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1/demo', { 
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1/DriveSud', { 
     useNewUrlParser: true, 
     useUnifiedTopology: true,
 });
 
 
 const app = express();
+
+app.set('models', models);
 
 const userRoute = require('./routes/user');
 
