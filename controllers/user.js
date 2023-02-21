@@ -12,9 +12,9 @@ async function userCreate(req, res) {
     try {
         const User = req.app.get("models").User;
         const NewUser = await new User({
-            firstName: "John",
-            lastName: "Doe",
-            dateOfBirth: new Date()
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            dateOfBirth: req.body.dateOfBirth
         }).save();
         console.log(User);
         res.json(NewUser);
@@ -24,4 +24,18 @@ async function userCreate(req, res) {
 
 };
 
-module.exports = { userGet, userCreate };
+async function userDelete(req, res) {
+    try {
+        if (!req.body._id) {
+            return res.json("_id manquant");
+        }
+        const User = req.app.get("models").User;
+        const ToDeleteUser = await User.findById(req.body._id);
+        await ToDeleteUser.remove();
+        res.json("Succefully Deleted");
+    } catch (error) {
+        res.json(error.message);
+    }
+};
+
+module.exports = { userGet, userCreate, userDelete };
