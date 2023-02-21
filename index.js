@@ -1,11 +1,12 @@
 const express = require('express');
 
 const app = express();
+
+const userRoute = require('./routes/user');
+
 app.use(express.json());
 
-app.get('/test', async (req, res) => {
-    res.json({ message: 'Hello World!' });
-});
+userRoute(app);
 
 app.listen(3000, () => {
     console.log('Server successfully launched');
